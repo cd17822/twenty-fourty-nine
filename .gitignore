@@ -1,0 +1,9 @@
+*~
+*.swp
+*.log
+*.DS_Store
+*.xcuserstate
+node_modules
+Pods
+images
+api/client_secret.json
