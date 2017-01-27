@@ -14,6 +14,8 @@
 		CB2A09311E3A707300728AE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB2A09301E3A707300728AE2 /* Assets.xcassets */; };
 		CB2A09341E3A707300728AE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB2A09321E3A707300728AE2 /* LaunchScreen.storyboard */; };
 		CB2A093E1E3A7A8300728AE2 /* Tile.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2A093D1E3A7A8300728AE2 /* Tile.xib */; };
+		CB2A09421E3A927800728AE2 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09411E3A927800728AE2 /* Tile.swift */; };
+		CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09431E3B0BEE00728AE2 /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		CB2A09331E3A707300728AE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB2A09351E3A707300728AE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB2A093D1E3A7A8300728AE2 /* Tile.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Tile.xib; path = ../Tile.xib; sourceTree = "<group>"; };
+		CB2A09411E3A927800728AE2 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tile.swift; path = ../Tile.swift; sourceTree = "<group>"; };
+		CB2A09431E3B0BEE00728AE2 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				CB2A09261E3A707300728AE2 /* AppDelegate.swift */,
+				CB2A09431E3B0BEE00728AE2 /* Globals.swift */,
 				CB2A09281E3A707300728AE2 /* ViewController.swift */,
+				CB2A09411E3A927800728AE2 /* Tile.swift */,
 				CB2A092A1E3A707300728AE2 /* Main.storyboard */,
 				CB2A093D1E3A7A8300728AE2 /* Tile.xib */,
 				CB2A09301E3A707300728AE2 /* Assets.xcassets */,
@@ -147,6 +153,8 @@
 				CB2A09291E3A707300728AE2 /* ViewController.swift in Sources */,
 				CB2A09271E3A707300728AE2 /* AppDelegate.swift in Sources */,
 				CB2A092F1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld in Sources */,
+				CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */,
+				CB2A09421E3A927800728AE2 /* Tile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

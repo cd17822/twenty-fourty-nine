@@ -101,6 +101,7 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="2aA-MQ-90E" firstAttribute="width" secondItem="EhY-yW-B3K" secondAttribute="height" multiplier="5:24" id="00t-s4-hJA"/>
                                     <constraint firstItem="v92-jT-4Sf" firstAttribute="top" secondItem="Woa-aa-xgp" secondAttribute="top" id="0rP-Wg-TuR"/>
@@ -170,6 +171,12 @@
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="vCI-cC-f7g" appends="YES" id="5t2-vX-bqB"/>
+                                    <outletCollection property="gestureRecognizers" destination="oF9-Iu-QAv" appends="YES" id="oRe-zx-vF5"/>
+                                    <outletCollection property="gestureRecognizers" destination="OET-tr-Wtz" appends="YES" id="ZBZ-GE-uvF"/>
+                                    <outletCollection property="gestureRecognizers" destination="MoT-bq-2NI" appends="YES" id="Ave-os-RZl"/>
+                                </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2049" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7r-91-Ced">
                                 <rect key="frame" x="24" y="15.5" width="168.5" height="89.5"/>
@@ -258,6 +265,26 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="vCI-cC-f7g">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="9z2-ds-Ef0"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="MoT-bq-2NI">
+                    <connections>
+                        <action selector="swipeDown:" destination="BYZ-38-t0r" id="ez5-Mv-b9k"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="OET-tr-Wtz">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="LZW-bX-BHP"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="oF9-Iu-QAv">
+                    <connections>
+                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="sfd-ZH-rvD"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136" y="136"/>
         </scene>
