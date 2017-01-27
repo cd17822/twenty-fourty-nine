@@ -9,22 +9,38 @@
 import UIKit
 
 class Tile: UIView {
-    var number: Int = 0
+    var num: Int = 0
+    @IBOutlet weak var label: UILabel!
     
     convenience init(_ i: Int) {
         self.init()
-        number = i
+        updateNum(i)
         layer.cornerRadius = 5
-        backgroundColor = UIColor.red
     }
     
     func create(withFrame f: CGRect) {
         frame = CGRect(x: f.minX + f.width/2, y: f.minY + f.height/1.9, width: 0, height: 0)
-        print(self.frame)
         UIView.animate(withDuration: 0.2*AC, animations: {
             self.frame = f
-            print(self.frame)
         })
+    }
+    
+    func updateNum(_ i: Int) {
+        num = i
+        
+        UIView.animate(withDuration: 0.2*AC, animations: {
+            //label.text = "0"
+            switch self.num {
+            case 0: self.backgroundColor = UIColor.white
+            case BASE: self.backgroundColor = UIColor.blue
+            case Int(pow(Double(BASE), 2)): self.backgroundColor = UIColor.red
+            default: self.backgroundColor = UIColor.black
+            }
+        })
+    }
+    
+    func increment() {
+        updateNum(num * BASE)
     }
     
     /*

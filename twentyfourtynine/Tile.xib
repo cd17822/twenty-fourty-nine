@@ -27,6 +27,9 @@
                 <constraint firstItem="7Mt-0f-Gd5" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QlI-6c-fSn"/>
                 <constraint firstItem="7Mt-0f-Gd5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Xun-wb-Qs1"/>
             </constraints>
+            <connections>
+                <outlet property="label" destination="7Mt-0f-Gd5" id="w5L-Q2-Tze"/>
+            </connections>
             <point key="canvasLocation" x="250.5" y="772.5"/>
         </view>
     </objects>

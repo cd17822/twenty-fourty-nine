@@ -14,14 +14,14 @@ class ViewController: UIViewController {
     }
     
     var b = [[Tile(0),Tile(0),Tile(0),Tile(0)],
-                 [Tile(0),Tile(0),Tile(0),Tile(0)],
-                 [Tile(0),Tile(0),Tile(0),Tile(0)],
-                 [Tile(0),Tile(0),Tile(0),Tile(0)]]
+             [Tile(0),Tile(0),Tile(0),Tile(0)],
+             [Tile(0),Tile(0),Tile(0),Tile(0)],
+             [Tile(0),Tile(0),Tile(0),Tile(0)]]
     var tileFrames = [[CGRect]]()
     var bOld = [[0,0,0,0],
-             [0,0,0,0],
-             [0,0,0,0],
-             [0,0,0,0]] // delete this
+                [0,0,0,0],
+                [0,0,0,0],
+                [0,0,0,0]] // delete this
     
     @IBOutlet weak var background: UIView!
     
@@ -55,14 +55,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         initBoxes()
         roundBoxes()
-        initTileFrames()
-        initBoard() // has to be after initTileFrames
         initInterBoxConstraints()
         updateInterBoxContraints()
+        initTileFrames()
+        initBoard() // has to be after initTileFrames and the constraint stuff
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,16 +92,18 @@ class ViewController: UIViewController {
         let firstInt = Int(first)
         let secondInt = Int(second)
         
-        b[firstInt/4][firstInt%4] = Tile(2)
-        b[secondInt/4][secondInt%4] = Tile(2)
-    
+        b[firstInt/4][firstInt%4] = Tile(BASE)
+        b[secondInt/4][secondInt%4] = Tile(BASE)
+        
+        background.addSubview(b[firstInt/4][firstInt%4])
+        background.addSubview(b[secondInt/4][secondInt%4])
+        
         b[firstInt/4][firstInt%4].create(withFrame: tileFrames[firstInt/4][firstInt%4])
         b[secondInt/4][secondInt%4].create(withFrame: tileFrames[secondInt/4][secondInt%4])
-        
     }
-
+    
     func initBoxes() {
-         boxes = [[box1, box2, box3, box4], [box5, box6, box7, box8], [box9, box10, box11, box12], [box13, box14, box15, box16]]
+        boxes = [[box1, box2, box3, box4], [box5, box6, box7, box8], [box9, box10, box11, box12], [box13, box14, box15, box16]]
     }
     
     func roundBoxes() {
@@ -111,11 +113,11 @@ class ViewController: UIViewController {
             }
         }
     }
-
+    
     func initInterBoxConstraints() {
         interBoxConstraints = [vertConstraint1,vertConstraint2,vertConstraint3,horConstraint1,horConstraint2,horConstraint3]
     }
-
+    
     func updateInterBoxContraints() {
         for constraint in interBoxConstraints {
             constraint.constant = 11.0 * background.frame.width / 290 // 290.0 is the width of the background on an iPhone SE (where the constraints are best-looking)
@@ -141,7 +143,7 @@ class ViewController: UIViewController {
     
     func swipe(_ direction: SwipeDirection) {
         let oldBoard = b // does a deep copy because swift is wild
-    
+        
         switch direction {
         case .Right: right()
         case .Down: down()
@@ -161,14 +163,14 @@ class ViewController: UIViewController {
                 }
             }
         }
-        if nothingChanged {
+        if !nothingChanged {
             insertNewTile()
         }
         
     }
     
     func animateMove(fromRow: Int, toRow: Int, fromCol: Int, toCol: Int) {
-        UIView.animate(withDuration: 2, animations: {
+        UIView.animate(withDuration: 1*AC, animations: {
             self.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
         })
     }
@@ -182,14 +184,14 @@ class ViewController: UIViewController {
     func moveRight() {
         for i in [0,1,2,3] {
             for j in [2,1,0] {
-                if b[i][j].number != 0 {
-                    var k = 0
-                    while j+k+1 < 4 && b[i][j+k+1].number == 0 {
+                if b[i][j].num != 0 {
+                    var k = j
+                    while k+1 < 4 && b[i][k+1].num == 0 {
                         k += 1
                     }
                     animateMove(fromRow: i, toRow: i, fromCol: j, toCol: k)
+                    b[i][k] = b[i][j]
                     b[i][j] = Tile(0)
-                    b[i][j+k] = b[i][j]
                 }
             }
         }
@@ -198,10 +200,10 @@ class ViewController: UIViewController {
     func mergeRight() {
         for i in [0,1,2,3] {
             for j in [2,1,0] {
-                if b[i][j].number == b[i][j+1].number {
-                    // animate this
-                    b[i][j+1].number *= 2
-                    b[i][j].number = 0
+                if b[i][j].num == b[i][j+1].num {
+                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j+1)
+                    b[i][j+1].increment()
+                    b[i][j].removeFromSuperview()
                 }
             }
         }
@@ -214,11 +216,31 @@ class ViewController: UIViewController {
     }
     
     func moveDown() {
-        
+        for i in [2,1,0] {
+            for j in [0,1,2,3] {
+                if b[i][j].num != 0 {
+                    var k = i
+                    while k+1 < 4 && b[k+1][j].num == 0 {
+                        k += 1
+                    }
+                    animateMove(fromRow: i, toRow: k, fromCol: j, toCol: j)
+                    b[k][j] = b[i][j]
+                    b[i][j] = Tile(0)
+                }
+            }
+        }
     }
     
     func mergeDown() {
-        
+        for i in [2,1,0] {
+            for j in [0,1,2,3] {
+                if b[i][j].num == b[i+1][j].num {
+                    animateMove(fromRow: i, toRow: i+1, fromCol: j, toCol: j)
+                    b[i+1][j].increment()
+                    b[i][j].removeFromSuperview()
+                }
+            }
+        }
     }
     
     func left() {
@@ -228,15 +250,31 @@ class ViewController: UIViewController {
     }
     
     func moveLeft() {
-        
+        for i in [0,1,2,3] {
+            for j in [1,2,3] {
+                if b[i][j].num != 0 {
+                    var k = j
+                    while k-1 >= 0 && b[i][k-1].num == 0 {
+                        k -= 1
+                    }
+                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: k)
+                    b[i][k] = b[i][j]
+                    b[i][j] = Tile(0)
+                }
+            }
+        }
     }
     
     func mergeLeft() {
-        
-    }
-    
-    func insertNewTile() {
-        
+        for i in [0,1,2,3] {
+            for j in [1,2,3] {
+                if b[i][j].num == b[i][j-1].num {
+                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j-1)
+                    b[i][j-1].increment()
+                    b[i][j].removeFromSuperview()
+                }
+            }
+        }
     }
     
     func up() {
@@ -246,11 +284,54 @@ class ViewController: UIViewController {
     }
     
     func moveUp() {
-        
+        for i in [1,2,3] {
+            for j in [0,1,2,3] {
+                if b[i][j].num != 0 {
+                    var k = i
+                    while k-1 >= 0 && b[k-1][j].num == 0 {
+                        k -= 1
+                    }
+                    animateMove(fromRow: i, toRow: k, fromCol: j, toCol: j)
+                    b[k][j] = b[i][j]
+                    b[i][j] = Tile(0)
+                }
+            }
+        }
     }
     
     func mergeUp() {
+        for i in [1,2,3] {
+            for j in [0,1,2,3] {
+                if b[i][j].num == b[i-1][j].num {
+                    animateMove(fromRow: i, toRow: i-1, fromCol: j, toCol: j)
+                    b[i-1][j].increment()
+                    b[i][j].removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    func insertNewTile() {
+        var emptys = [(row: Int, col: Int)]()
+        for row in [0,1,2,3] {
+            for col in [0,1,2,3] {
+                if b[row][col].num == 0 {
+                    emptys.append((row: row, col: col))
+                }
+            }
+        }
         
+        if emptys.count == 0 {
+            // end the game but like there are other ways for the game to end
+            return
+        }
+        
+        srandom(UInt32(time(nil)))
+        let tuple = emptys[Int(arc4random()) % emptys.count]
+        b[tuple.row][tuple.col] = Tile(BASE)
+        background.addSubview(b[tuple.row][tuple.col])
+        b[tuple.row][tuple.col].create(withFrame: tileFrames[tuple.row][tuple.col])
+        // could generate BASE * BASE tiles also
     }
 }
 
