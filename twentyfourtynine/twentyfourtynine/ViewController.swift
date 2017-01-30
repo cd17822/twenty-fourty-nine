@@ -18,11 +18,12 @@ class ViewController: UIViewController {
              [Tile(0),Tile(0),Tile(0),Tile(0)],
              [Tile(0),Tile(0),Tile(0),Tile(0)]]
     var tileFrames = [[CGRect]]()
-    var bOld = [[0,0,0,0],
-                [0,0,0,0],
-                [0,0,0,0],
-                [0,0,0,0]] // delete this
     
+    @IBOutlet weak var scoreLabel: UILabel!
+    var score: Int = 0
+    
+    @IBOutlet weak var ticker: Ticker!
+
     @IBOutlet weak var background: UIView!
     
     @IBOutlet weak var box1: UIView!
@@ -120,12 +121,12 @@ class ViewController: UIViewController {
     
     func updateInterBoxContraints() {
         for constraint in interBoxConstraints {
-            constraint.constant = 11.0 * background.frame.width / 290 // 290.0 is the width of the background on an iPhone SE (where the constraints are best-looking)
+            constraint.constant = 11.0 * background.frame.width / 290.0 // 290.0 is the width of the background on an iPhone SE (where the constraints are best-looking)
         }
     }
     
     func showTiles(/**/) {
-        // TODO
+        // TODO eh
     }
     
     @IBAction func swipeRight(_ sender: Any) {
@@ -164,6 +165,7 @@ class ViewController: UIViewController {
             }
         }
         if !nothingChanged {
+            tockTicker()
             insertNewTile()
         }
         
@@ -184,7 +186,7 @@ class ViewController: UIViewController {
     func moveRight() {
         for i in [0,1,2,3] {
             for j in [2,1,0] {
-                if b[i][j].num != 0 {
+                if b[i][j].num != 0 && b[i][j+1].num == 0 {
                     var k = j
                     while k+1 < 4 && b[i][k+1].num == 0 {
                         k += 1
@@ -200,10 +202,13 @@ class ViewController: UIViewController {
     func mergeRight() {
         for i in [0,1,2,3] {
             for j in [2,1,0] {
-                if b[i][j].num == b[i][j+1].num {
+                if b[i][j].num != 0 && b[i][j].num == b[i][j+1].num {
+//                    print("Mergeright")
                     animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j+1)
                     b[i][j+1].increment()
+                    increaseScore(by: b[i][j+1].num)
                     b[i][j].removeFromSuperview()
+                    b[i][j] = Tile(0)
                 }
             }
         }
@@ -218,7 +223,7 @@ class ViewController: UIViewController {
     func moveDown() {
         for i in [2,1,0] {
             for j in [0,1,2,3] {
-                if b[i][j].num != 0 {
+                if b[i][j].num != 0 && b[i+1][j].num == 0 {
                     var k = i
                     while k+1 < 4 && b[k+1][j].num == 0 {
                         k += 1
@@ -234,10 +239,13 @@ class ViewController: UIViewController {
     func mergeDown() {
         for i in [2,1,0] {
             for j in [0,1,2,3] {
-                if b[i][j].num == b[i+1][j].num {
+                if b[i][j].num != 0 && b[i][j].num == b[i+1][j].num {
+//                    print("Mergedown")
                     animateMove(fromRow: i, toRow: i+1, fromCol: j, toCol: j)
                     b[i+1][j].increment()
+                    increaseScore(by: b[i+1][j].num)
                     b[i][j].removeFromSuperview()
+                    b[i][j] = Tile(0)
                 }
             }
         }
@@ -252,7 +260,7 @@ class ViewController: UIViewController {
     func moveLeft() {
         for i in [0,1,2,3] {
             for j in [1,2,3] {
-                if b[i][j].num != 0 {
+                if b[i][j].num != 0 && b[i][j-1].num == 0 {
                     var k = j
                     while k-1 >= 0 && b[i][k-1].num == 0 {
                         k -= 1
@@ -268,10 +276,13 @@ class ViewController: UIViewController {
     func mergeLeft() {
         for i in [0,1,2,3] {
             for j in [1,2,3] {
-                if b[i][j].num == b[i][j-1].num {
+                if b[i][j].num != 0 && b[i][j].num == b[i][j-1].num {
+//                    print("mergeleft")
                     animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j-1)
                     b[i][j-1].increment()
+                    increaseScore(by: b[i][j-1].num)
                     b[i][j].removeFromSuperview()
+                    b[i][j] = Tile(0)
                 }
             }
         }
@@ -286,7 +297,7 @@ class ViewController: UIViewController {
     func moveUp() {
         for i in [1,2,3] {
             for j in [0,1,2,3] {
-                if b[i][j].num != 0 {
+                if b[i][j].num != 0 && b[i-1][j].num == 0 {
                     var k = i
                     while k-1 >= 0 && b[k-1][j].num == 0 {
                         k -= 1
@@ -302,10 +313,13 @@ class ViewController: UIViewController {
     func mergeUp() {
         for i in [1,2,3] {
             for j in [0,1,2,3] {
-                if b[i][j].num == b[i-1][j].num {
+                if b[i][j].num != 0 && b[i][j].num == b[i-1][j].num {
+//                    print("mergeup")
                     animateMove(fromRow: i, toRow: i-1, fromCol: j, toCol: j)
                     b[i-1][j].increment()
+                    increaseScore(by: b[i-1][j].num)
                     b[i][j].removeFromSuperview()
+                    b[i][j] = Tile(0)
                 }
             }
         }
@@ -332,6 +346,17 @@ class ViewController: UIViewController {
         background.addSubview(b[tuple.row][tuple.col])
         b[tuple.row][tuple.col].create(withFrame: tileFrames[tuple.row][tuple.col])
         // could generate BASE * BASE tiles also
+        
+//        print(b.map {$0.map { $0.num}})
+    }
+    
+    func increaseScore(by amount: Int) {
+        score += amount
+        scoreLabel.text = String(score)
+    }
+    
+    func tockTicker() {
+        ticker.tock()
     }
 }
 

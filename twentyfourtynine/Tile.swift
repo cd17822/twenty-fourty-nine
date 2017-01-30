@@ -10,26 +10,41 @@ import UIKit
 
 class Tile: UIView {
     var num: Int = 0
-    @IBOutlet weak var label: UILabel!
+    let label = UILabel()
     
     convenience init(_ i: Int) {
         self.init()
         updateNum(i)
-        layer.cornerRadius = 5
+        roundCorners()
     }
     
     func create(withFrame f: CGRect) {
-        frame = CGRect(x: f.minX + f.width/2, y: f.minY + f.height/1.9, width: 0, height: 0)
+        frame = CGRect(x: f.minX + f.width/2, y: f.minY + f.height/1.9, width: 1, height: 1)
         UIView.animate(withDuration: 0.2*AC, animations: {
             self.frame = f
+            self.configureLabel() // doesnt really work
         })
+    }
+    
+    func configureLabel() {
+        label.text = String(num)
+        label.textColor = UIColor.white
+        label.font = UIFont(name: "Avenir Next", size: 20)
+        label.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        label.textAlignment = .center
+        addSubview(label)
+    }
+    
+    func roundCorners() {
+        layer.cornerRadius = 5
     }
     
     func updateNum(_ i: Int) {
         num = i
         
         UIView.animate(withDuration: 0.2*AC, animations: {
-            //label.text = "0"
+            self.label.text = String(self.num)
+            
             switch self.num {
             case 0: self.backgroundColor = UIColor.white
             case BASE: self.backgroundColor = UIColor.blue
