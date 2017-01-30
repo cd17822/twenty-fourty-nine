@@ -48,6 +48,7 @@ class Ticker: UIView {
         ticks += 1
         label.text = String(ticks)
         animateTock()
+        print(ticks)
     }
     
     func animateTock() {
