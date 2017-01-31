@@ -59,13 +59,24 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         initBoxes()
+        print("viewDidAppear")
+        print(boxes.map { $0.map { $0.frame } })
         roundBoxes()
         initInterBoxConstraints()
         updateInterBoxContraints()
         initTileFrames()
+        print("viewDidLayoutSubviews")
+        print(boxes.map { $0.map { $0.frame } })
         initBoard() // has to be after initTileFrames and the constraint stuff
     }
-    
+    /*
+    override func viewDidLayoutSubviews() {
+        initTileFrames()
+        print("viewDidLayoutSubviews")
+        print(boxes.map { $0.map { $0.frame } })
+        initBoard() // has to be after initTileFrames and the constraint stuff
+    }
+    */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -123,6 +134,9 @@ class ViewController: UIViewController {
         for constraint in interBoxConstraints {
             constraint.constant = 11.0 * background.frame.width / 290.0 // 290.0 is the width of the background on an iPhone SE (where the constraints are best-looking)
         }
+        
+        print("updateInterBoxContraints")
+        print(boxes.map { $0.map { $0.frame } })
     }
     
     func showTiles(/**/) {
@@ -131,6 +145,8 @@ class ViewController: UIViewController {
     
     @IBAction func swipeRight(_ sender: Any) {
         swipe(.Right)
+        print("swipeRIGHT")
+        print(boxes.map { $0.map { $0.frame } })
     }
     @IBAction func swipeDown(_ sender: Any) {
         swipe(.Down)
@@ -172,7 +188,7 @@ class ViewController: UIViewController {
     }
     
     func animateMove(fromRow: Int, toRow: Int, fromCol: Int, toCol: Int) {
-        UIView.animate(withDuration: 1*AC, animations: {
+        UIView.animate(withDuration: 0.1*AC, animations: {
             self.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
         })
     }

@@ -29,7 +29,7 @@ class Tile: UIView {
     func configureLabel() {
         label.text = String(num)
         label.textColor = UIColor.white
-        label.font = UIFont(name: "Avenir Next", size: 20)
+        label.font = UIFont(name: "Avenir Next", size: 40)
         label.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         label.textAlignment = .center
         addSubview(label)
