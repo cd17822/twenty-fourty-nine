@@ -58,16 +58,17 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        initBoxes()
-        print("viewDidAppear")
-        print(boxes.map { $0.map { $0.frame } })
-        roundBoxes()
-        initInterBoxConstraints()
-        updateInterBoxContraints()
-        initTileFrames()
-        print("viewDidLayoutSubviews")
-        print(boxes.map { $0.map { $0.frame } })
-        initBoard() // has to be after initTileFrames and the constraint stuff
+        UIView.animate(withDuration: 0.1, animations: {
+            self.view.alpha = 0.99
+            self.initBoxes()
+            self.roundBoxes()
+            self.initInterBoxConstraints()
+            self.updateInterBoxContraints()
+        }, completion: { _ in
+            self.view.alpha = 1.00
+            self.initTileFrames()
+            self.initBoard() // has to be after initTileFrames and the constraint stuff
+        })
     }
     /*
     override func viewDidLayoutSubviews() {
@@ -134,9 +135,6 @@ class ViewController: UIViewController {
         for constraint in interBoxConstraints {
             constraint.constant = 11.0 * background.frame.width / 290.0 // 290.0 is the width of the background on an iPhone SE (where the constraints are best-looking)
         }
-        
-        print("updateInterBoxContraints")
-        print(boxes.map { $0.map { $0.frame } })
     }
     
     func showTiles(/**/) {
@@ -145,8 +143,6 @@ class ViewController: UIViewController {
     
     @IBAction func swipeRight(_ sender: Any) {
         swipe(.Right)
-        print("swipeRIGHT")
-        print(boxes.map { $0.map { $0.frame } })
     }
     @IBAction func swipeDown(_ sender: Any) {
         swipe(.Down)
