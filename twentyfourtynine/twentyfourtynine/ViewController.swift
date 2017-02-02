@@ -20,9 +20,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 //        board.draw(on: self)
     }
-    
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.view.addSubview(board)
         board.draw(on: self)
     }
     

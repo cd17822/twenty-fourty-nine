@@ -9,6 +9,7 @@
 import UIKit
 
 class Board: UIView {
+    
 //    var contentView : UIView!
 //    
 //    override init(frame: CGRect) {
@@ -42,11 +43,6 @@ class Board: UIView {
 //        
 //        return view
 //    }
-    
-    
-    
-    
-    
     
     var vc: ViewController? = nil
     
@@ -91,8 +87,14 @@ class Board: UIView {
         self.b = b
     }
     
+    
+    
     func draw(on vc: ViewController) {
         self.vc = vc
+        vc.view.addSubview(self)
+//        while(box1 == nil) {
+//            print("")
+//        }
         
         initBoxes()
         roundBoxes()

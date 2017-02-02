@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Board" customModule="twentyfourtynine" customModuleProvider="target">
             <connections>
-                <outlet property="box1" destination="JuI-ZS-ywI" id="Ijv-zZ-4s9"/>
+                <outlet property="box1" destination="JuI-ZS-ywI" id="0ah-cd-QLm"/>
                 <outlet property="box10" destination="V6E-7d-Kyr" id="Cqo-AC-vxr"/>
                 <outlet property="box11" destination="Lni-yy-iVu" id="7Qd-Jp-9K4"/>
                 <outlet property="box12" destination="JXk-pg-qTL" id="ycf-ma-A3O"/>
