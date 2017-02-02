@@ -16,7 +16,9 @@
 		CB2A093E1E3A7A8300728AE2 /* Tile.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2A093D1E3A7A8300728AE2 /* Tile.xib */; };
 		CB2A09421E3A927800728AE2 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09411E3A927800728AE2 /* Tile.swift */; };
 		CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09431E3B0BEE00728AE2 /* Globals.swift */; };
+		CB71902A1E42A6F800874D8D /* Board.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB7190291E42A6F800874D8D /* Board.xib */; };
 		CBA5D76B1E3F8F860075D7DB /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5D76A1E3F8F860075D7DB /* Ticker.swift */; };
+		CBAA8E701E4293B700201307 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA8E6F1E4293B700201307 /* Board.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +33,9 @@
 		CB2A093D1E3A7A8300728AE2 /* Tile.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Tile.xib; path = ../Tile.xib; sourceTree = "<group>"; };
 		CB2A09411E3A927800728AE2 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tile.swift; path = ../Tile.swift; sourceTree = "<group>"; };
 		CB2A09431E3B0BEE00728AE2 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		CB7190291E42A6F800874D8D /* Board.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Board.xib; sourceTree = "<group>"; };
 		CBA5D76A1E3F8F860075D7DB /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
+		CBAA8E6F1E4293B700201307 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +71,12 @@
 				CB2A09261E3A707300728AE2 /* AppDelegate.swift */,
 				CB2A09431E3B0BEE00728AE2 /* Globals.swift */,
 				CB2A09281E3A707300728AE2 /* ViewController.swift */,
+				CBAA8E6F1E4293B700201307 /* Board.swift */,
 				CB2A09411E3A927800728AE2 /* Tile.swift */,
 				CBA5D76A1E3F8F860075D7DB /* Ticker.swift */,
-				CB2A092A1E3A707300728AE2 /* Main.storyboard */,
 				CB2A093D1E3A7A8300728AE2 /* Tile.xib */,
+				CB7190291E42A6F800874D8D /* Board.xib */,
+				CB2A092A1E3A707300728AE2 /* Main.storyboard */,
 				CB2A09301E3A707300728AE2 /* Assets.xcassets */,
 				CB2A09321E3A707300728AE2 /* LaunchScreen.storyboard */,
 				CB2A09351E3A707300728AE2 /* Info.plist */,
@@ -140,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB2A09341E3A707300728AE2 /* LaunchScreen.storyboard in Resources */,
+				CB71902A1E42A6F800874D8D /* Board.xib in Resources */,
 				CB2A09311E3A707300728AE2 /* Assets.xcassets in Resources */,
 				CB2A092C1E3A707300728AE2 /* Main.storyboard in Resources */,
 				CB2A093E1E3A7A8300728AE2 /* Tile.xib in Resources */,
@@ -157,6 +164,7 @@
 				CBA5D76B1E3F8F860075D7DB /* Ticker.swift in Sources */,
 				CB2A09271E3A707300728AE2 /* AppDelegate.swift in Sources */,
 				CB2A092F1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld in Sources */,
+				CBAA8E701E4293B700201307 /* Board.swift in Sources */,
 				CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */,
 				CB2A09421E3A927800728AE2 /* Tile.swift in Sources */,
 			);
