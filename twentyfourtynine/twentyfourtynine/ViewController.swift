@@ -160,9 +160,10 @@ class ViewController: UIViewController {
         case .Up: up()
         }
         
-        
         if !nothingChanged(oldBoard, b) {
+            checkingForGameOver = true
             checkForGameOver()
+            checkingForGameOver = false
             insertNewTile()
         }
         
@@ -170,6 +171,7 @@ class ViewController: UIViewController {
     
     func animateMove(fromRow: Int, toRow: Int, fromCol: Int, toCol: Int) {
         if checkingForGameOver {
+            print("stopanimation")
             return
         }
         
@@ -351,34 +353,32 @@ class ViewController: UIViewController {
     }
     
     func checkForGameOver() {
-        checkingForGameOver = true
-        let realBoard = b
-        
+        let realBoard = b.map { $0.map { Tile($0.num) } }
+        print(b.map {$0.map {$0.num} })
+        print(realBoard.map {$0.map {$0.num} })
         right()
         if !nothingChanged(realBoard, b) {
+            print(b.map {$0.map {$0.num} })
+            print(realBoard.map {$0.map {$0.num} })
             b = realBoard
-            checkingForGameOver = false
             return
         }
         
         down()
         if !nothingChanged(realBoard, b) {
             b = realBoard
-            checkingForGameOver = false
             return
         }
         
         left()
         if !nothingChanged(realBoard, b) {
             b = realBoard
-            checkingForGameOver = false
             return
         }
         
         up()
         if !nothingChanged(realBoard, b) {
             b = realBoard
-            checkingForGameOver = false
             return
         }
         

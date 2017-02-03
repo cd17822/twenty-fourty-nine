@@ -23,10 +23,5 @@ class AI {
     
     func r() {
         vc.swipe(.Right)
-        vc.swipe(.Left)
-        vc.swipe(.Right)
-        vc.swipe(.Left)
-        vc.swipe(.Right)
-        vc.swipe(.Left)
     }
 }
