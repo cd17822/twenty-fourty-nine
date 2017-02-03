@@ -13,16 +13,15 @@ class ViewController: UIViewController {
         case Right, Down, Left, Up
     }
     
-    var b = [[Tile(0),Tile(0),Tile(0),Tile(0)],
-             [Tile(0),Tile(0),Tile(0),Tile(0)],
-             [Tile(0),Tile(0),Tile(0),Tile(0)],
-             [Tile(0),Tile(0),Tile(0),Tile(0)]]
+    var b = [[Tile]]()
     var tileFrames = [[CGRect]]()
     
     @IBOutlet weak var scoreLabel: UILabel!
     var score: Int = 0
     
-    @IBOutlet weak var ticker: Ticker!
+    var checkingForGameOver = false
+    
+    @IBOutlet var gameOverView: UIView!
 
     @IBOutlet weak var background: UIView!
     
@@ -70,18 +69,6 @@ class ViewController: UIViewController {
             self.initBoard() // has to be after initTileFrames and the constraint stuff
         })
     }
-    /*
-    override func viewDidLayoutSubviews() {
-        initTileFrames()
-        print("viewDidLayoutSubviews")
-        print(boxes.map { $0.map { $0.frame } })
-        initBoard() // has to be after initTileFrames and the constraint stuff
-    }
-    */
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func initTileFrames() {
         for row in boxes {
@@ -94,7 +81,20 @@ class ViewController: UIViewController {
     }
     
     func initBoard() {
-        // handle case where there is a board saved in coredata
+        // handle case where there is a board saved in coredata?
+        gameOverView.isHidden = true
+        
+        for row in b {
+            for tile in row {
+                tile.removeFromSuperview()
+            }
+        }
+        
+        b = [[Tile(0),Tile(0),Tile(0),Tile(0)],
+         [Tile(0),Tile(0),Tile(0),Tile(0)],
+         [Tile(0),Tile(0),Tile(0),Tile(0)],
+         [Tile(0),Tile(0),Tile(0),Tile(0)]]
+        
         srandom(UInt32(time(nil)))
         let first = arc4random() % 16
         var second = arc4random() % 16
@@ -137,10 +137,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func showTiles(/**/) {
-        // TODO eh
-    }
-    
     @IBAction func swipeRight(_ sender: Any) {
         swipe(.Right)
     }
@@ -164,26 +160,19 @@ class ViewController: UIViewController {
         case .Up: up()
         }
         
-        var nothingChanged = true
-        for i in [0,1,2,3] {
-            if nothingChanged == false {
-                break
-            }
-            for j in [0,1,2,3] {
-                if b[i][j] != oldBoard[i][j] {
-                    nothingChanged = false
-                    break
-                }
-            }
-        }
-        if !nothingChanged {
-            tockTicker()
+        
+        if !nothingChanged(oldBoard, b) {
+            checkForGameOver()
             insertNewTile()
         }
         
     }
     
     func animateMove(fromRow: Int, toRow: Int, fromCol: Int, toCol: Int) {
+        if checkingForGameOver {
+            return
+        }
+        
         UIView.animate(withDuration: 0.1*AC, animations: {
             self.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
         })
@@ -215,7 +204,6 @@ class ViewController: UIViewController {
         for i in [0,1,2,3] {
             for j in [2,1,0] {
                 if b[i][j].num != 0 && b[i][j].num == b[i][j+1].num {
-//                    print("Mergeright")
                     animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j+1)
                     b[i][j+1].increment()
                     increaseScore(by: b[i][j+1].num)
@@ -252,7 +240,6 @@ class ViewController: UIViewController {
         for i in [2,1,0] {
             for j in [0,1,2,3] {
                 if b[i][j].num != 0 && b[i][j].num == b[i+1][j].num {
-//                    print("Mergedown")
                     animateMove(fromRow: i, toRow: i+1, fromCol: j, toCol: j)
                     b[i+1][j].increment()
                     increaseScore(by: b[i+1][j].num)
@@ -289,7 +276,6 @@ class ViewController: UIViewController {
         for i in [0,1,2,3] {
             for j in [1,2,3] {
                 if b[i][j].num != 0 && b[i][j].num == b[i][j-1].num {
-//                    print("mergeleft")
                     animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j-1)
                     b[i][j-1].increment()
                     increaseScore(by: b[i][j-1].num)
@@ -326,7 +312,6 @@ class ViewController: UIViewController {
         for i in [1,2,3] {
             for j in [0,1,2,3] {
                 if b[i][j].num != 0 && b[i][j].num == b[i-1][j].num {
-//                    print("mergeup")
                     animateMove(fromRow: i, toRow: i-1, fromCol: j, toCol: j)
                     b[i-1][j].increment()
                     increaseScore(by: b[i-1][j].num)
@@ -348,7 +333,7 @@ class ViewController: UIViewController {
         }
         
         if emptys.count == 0 {
-            // end the game but like there are other ways for the game to end
+            gameOver()
             return
         }
         
@@ -358,8 +343,6 @@ class ViewController: UIViewController {
         background.addSubview(b[tuple.row][tuple.col])
         b[tuple.row][tuple.col].create(withFrame: tileFrames[tuple.row][tuple.col])
         // could generate BASE * BASE tiles also
-        
-//        print(b.map {$0.map { $0.num}})
     }
     
     func increaseScore(by amount: Int) {
@@ -367,8 +350,66 @@ class ViewController: UIViewController {
         scoreLabel.text = String(score)
     }
     
-    func tockTicker() {
-        ticker.tock()
+    func checkForGameOver() {
+        checkingForGameOver = true
+        let realBoard = b
+        
+        right()
+        if !nothingChanged(realBoard, b) {
+            b = realBoard
+            checkingForGameOver = false
+            return
+        }
+        
+        down()
+        if !nothingChanged(realBoard, b) {
+            b = realBoard
+            checkingForGameOver = false
+            return
+        }
+        
+        left()
+        if !nothingChanged(realBoard, b) {
+            b = realBoard
+            checkingForGameOver = false
+            return
+        }
+        
+        up()
+        if !nothingChanged(realBoard, b) {
+            b = realBoard
+            checkingForGameOver = false
+            return
+        }
+        
+        gameOver()
+    }
+    
+    func nothingChanged(_ b1: [[Tile]], _ b2: [[Tile]]) -> Bool {
+        for i in [0,1,2,3] {
+            for j in [0,1,2,3] {
+                if b1[i][j] != b2[i][j] {
+                    return false
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    func gameOver() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.gameOverView.isHidden = false
+        })
+        
+    }
+    
+    @IBAction func newGamePressed(_ sender: Any) {
+        initBoard()
+    }
+    
+    @IBAction func aiPressed(_ sender: Any) {
+        AI(on: self).start()
     }
 }
 

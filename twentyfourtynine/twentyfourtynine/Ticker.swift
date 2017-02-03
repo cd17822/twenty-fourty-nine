@@ -48,19 +48,22 @@ class Ticker: UIView {
         ticks += 1
         label.text = String(ticks)
         animateTock()
+        label.text = String(ticks)
+        addSubview(label)
         print(ticks)
     }
     
     func animateTock() {
         if ticks % 2 == 1 {
-            UIView.animate(withDuration: 0.2, animations: {
+            UIView.animate(withDuration: 0.08, animations: {
                 self.frame = self.mod1Frame!
             })
         }else{
-            UIView.animate(withDuration: 0.2, animations: {
+            UIView.animate(withDuration: 0.08, animations: {
                 self.frame = self.mod0Frame!
             })
         }
+        print(frame)
     }
 
 }
