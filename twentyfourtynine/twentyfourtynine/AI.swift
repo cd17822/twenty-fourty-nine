@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class AI {
     var vc: ViewController!
@@ -18,10 +19,15 @@ class AI {
     }
     
     func start() {
+        AC = 0.5
         r()
     }
     
     func r() {
-        vc.swipe(.Right)
+        UIView.animate(withDuration: 0.1*AC, animations: {
+        self.vc.swipe(.Right)
+        }, completion: { _ in
+        self.vc.swipe(.Down)
+        })
     }
 }

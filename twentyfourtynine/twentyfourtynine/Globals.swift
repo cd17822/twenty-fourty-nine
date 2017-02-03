@@ -8,5 +8,5 @@
 
 import Foundation
 
-let AC: TimeInterval = 1.0 // animation constant
+var AC: TimeInterval = 1.0 // animation constant
 let BASE: Int = 2

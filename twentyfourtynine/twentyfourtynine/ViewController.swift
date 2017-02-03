@@ -13,8 +13,19 @@ class ViewController: UIViewController {
         case Right, Down, Left, Up
     }
     
-    var b = [[Tile]]()
-    var tileFrames = [[CGRect]]()
+    var b = Board()
+    
+    var tileFrames: [[CGRect]] {
+        var tmp = [[CGRect]]()
+        for row in boxes {
+            var tileRow = [CGRect]()
+            for tile in row {
+                tileRow.append(tile.frame)
+            }
+            tmp.append(tileRow)
+        }
+        return tmp
+    }
     
     @IBOutlet weak var scoreLabel: UILabel!
     var score: Int = 0
@@ -41,7 +52,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var box14: UIView!
     @IBOutlet weak var box15: UIView!
     @IBOutlet weak var box16: UIView!
-    var boxes = [[UIView]]()
+    var boxes: [[UIView]] {
+        return [[box1, box2, box3, box4], [box5, box6, box7, box8], [box9, box10, box11, box12], [box13, box14, box15, box16]]
+    }
     
     @IBOutlet weak var vertConstraint1: NSLayoutConstraint!
     @IBOutlet weak var vertConstraint2: NSLayoutConstraint!
@@ -49,7 +62,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var horConstraint1: NSLayoutConstraint!
     @IBOutlet weak var horConstraint2: NSLayoutConstraint!
     @IBOutlet weak var horConstraint3: NSLayoutConstraint!
-    var interBoxConstraints = [NSLayoutConstraint]()
+    var interBoxConstraints: [NSLayoutConstraint] {
+        return [vertConstraint1,vertConstraint2,vertConstraint3,horConstraint1,horConstraint2,horConstraint3]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,64 +74,25 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         UIView.animate(withDuration: 0.1, animations: {
             self.view.alpha = 0.99
-            self.initBoxes()
             self.roundBoxes()
-            self.initInterBoxConstraints()
             self.updateInterBoxContraints()
         }, completion: { _ in
             self.view.alpha = 1.00
-            self.initTileFrames()
             self.initBoard() // has to be after initTileFrames and the constraint stuff
         })
-    }
-    
-    func initTileFrames() {
-        for row in boxes {
-            var tileRow = [CGRect]()
-            for tile in row {
-                tileRow.append(tile.frame)
-            }
-            tileFrames.append(tileRow)
-        }
     }
     
     func initBoard() {
         // handle case where there is a board saved in coredata?
         gameOverView.isHidden = true
         
-        for row in b {
-            for tile in row {
-                tile.removeFromSuperview()
-            }
-        }
+        b.clear()
         
-        b = [[Tile(0),Tile(0),Tile(0),Tile(0)],
-         [Tile(0),Tile(0),Tile(0),Tile(0)],
-         [Tile(0),Tile(0),Tile(0),Tile(0)],
-         [Tile(0),Tile(0),Tile(0),Tile(0)]]
-        
-        srandom(UInt32(time(nil)))
-        let first = arc4random() % 16
-        var second = arc4random() % 16
-        while second == first {
-            second = arc4random() % 16
-        }
-        
-        let firstInt = Int(first)
-        let secondInt = Int(second)
-        
-        b[firstInt/4][firstInt%4] = Tile(BASE)
-        b[secondInt/4][secondInt%4] = Tile(BASE)
-        
-        background.addSubview(b[firstInt/4][firstInt%4])
-        background.addSubview(b[secondInt/4][secondInt%4])
-        
-        b[firstInt/4][firstInt%4].create(withFrame: tileFrames[firstInt/4][firstInt%4])
-        b[secondInt/4][secondInt%4].create(withFrame: tileFrames[secondInt/4][secondInt%4])
+        b = Board(on: self)
     }
     
-    func initBoxes() {
-        boxes = [[box1, box2, box3, box4], [box5, box6, box7, box8], [box9, box10, box11, box12], [box13, box14, box15, box16]]
+    func showTile(_ tile: Tile) {
+        background.addSubview(tile)
     }
     
     func roundBoxes() {
@@ -125,10 +101,6 @@ class ViewController: UIViewController {
                 box.layer.cornerRadius = 5
             }
         }
-    }
-    
-    func initInterBoxConstraints() {
-        interBoxConstraints = [vertConstraint1,vertConstraint2,vertConstraint3,horConstraint1,horConstraint2,horConstraint3]
     }
     
     func updateInterBoxContraints() {
@@ -151,200 +123,27 @@ class ViewController: UIViewController {
     }
     
     func swipe(_ direction: SwipeDirection) {
-        let oldBoard = b // does a deep copy because swift is wild
+        let oldBoard = Board(b.b)
         
         switch direction {
-        case .Right: right()
-        case .Down: down()
-        case .Left: left()
-        case .Up: up()
+        case .Right: b.right()
+        case .Down: b.down()
+        case .Left: b.left()
+        case .Up: b.up()
         }
-        
-        if !nothingChanged(oldBoard, b) {
-            checkingForGameOver = true
-            checkForGameOver()
-            checkingForGameOver = false
-            insertNewTile()
+        print(b.description)
+        print(oldBoard.description)
+        if !b.equals(oldBoard) {
+            b.checkForGameOver()
+            b.insertNewTile()
         }
         
     }
     
     func animateMove(fromRow: Int, toRow: Int, fromCol: Int, toCol: Int) {
-        if checkingForGameOver {
-            print("stopanimation")
-            return
-        }
-        
         UIView.animate(withDuration: 0.1*AC, animations: {
-            self.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
+            self.b.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
         })
-    }
-    
-    func right() {
-        moveRight()
-        mergeRight()
-        moveRight()
-    }
-    
-    func moveRight() {
-        for i in [0,1,2,3] {
-            for j in [2,1,0] {
-                if b[i][j].num != 0 && b[i][j+1].num == 0 {
-                    var k = j
-                    while k+1 < 4 && b[i][k+1].num == 0 {
-                        k += 1
-                    }
-                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: k)
-                    b[i][k] = b[i][j]
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func mergeRight() {
-        for i in [0,1,2,3] {
-            for j in [2,1,0] {
-                if b[i][j].num != 0 && b[i][j].num == b[i][j+1].num {
-                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j+1)
-                    b[i][j+1].increment()
-                    increaseScore(by: b[i][j+1].num)
-                    b[i][j].removeFromSuperview()
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func down() {
-        moveDown()
-        mergeDown()
-        moveDown()
-    }
-    
-    func moveDown() {
-        for i in [2,1,0] {
-            for j in [0,1,2,3] {
-                if b[i][j].num != 0 && b[i+1][j].num == 0 {
-                    var k = i
-                    while k+1 < 4 && b[k+1][j].num == 0 {
-                        k += 1
-                    }
-                    animateMove(fromRow: i, toRow: k, fromCol: j, toCol: j)
-                    b[k][j] = b[i][j]
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func mergeDown() {
-        for i in [2,1,0] {
-            for j in [0,1,2,3] {
-                if b[i][j].num != 0 && b[i][j].num == b[i+1][j].num {
-                    animateMove(fromRow: i, toRow: i+1, fromCol: j, toCol: j)
-                    b[i+1][j].increment()
-                    increaseScore(by: b[i+1][j].num)
-                    b[i][j].removeFromSuperview()
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func left() {
-        moveLeft()
-        mergeLeft()
-        moveLeft()
-    }
-    
-    func moveLeft() {
-        for i in [0,1,2,3] {
-            for j in [1,2,3] {
-                if b[i][j].num != 0 && b[i][j-1].num == 0 {
-                    var k = j
-                    while k-1 >= 0 && b[i][k-1].num == 0 {
-                        k -= 1
-                    }
-                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: k)
-                    b[i][k] = b[i][j]
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func mergeLeft() {
-        for i in [0,1,2,3] {
-            for j in [1,2,3] {
-                if b[i][j].num != 0 && b[i][j].num == b[i][j-1].num {
-                    animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j-1)
-                    b[i][j-1].increment()
-                    increaseScore(by: b[i][j-1].num)
-                    b[i][j].removeFromSuperview()
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func up() {
-        moveUp()
-        mergeUp()
-        moveUp()
-    }
-    
-    func moveUp() {
-        for i in [1,2,3] {
-            for j in [0,1,2,3] {
-                if b[i][j].num != 0 && b[i-1][j].num == 0 {
-                    var k = i
-                    while k-1 >= 0 && b[k-1][j].num == 0 {
-                        k -= 1
-                    }
-                    animateMove(fromRow: i, toRow: k, fromCol: j, toCol: j)
-                    b[k][j] = b[i][j]
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func mergeUp() {
-        for i in [1,2,3] {
-            for j in [0,1,2,3] {
-                if b[i][j].num != 0 && b[i][j].num == b[i-1][j].num {
-                    animateMove(fromRow: i, toRow: i-1, fromCol: j, toCol: j)
-                    b[i-1][j].increment()
-                    increaseScore(by: b[i-1][j].num)
-                    b[i][j].removeFromSuperview()
-                    b[i][j] = Tile(0)
-                }
-            }
-        }
-    }
-    
-    func insertNewTile() {
-        var emptys = [(row: Int, col: Int)]()
-        for row in [0,1,2,3] {
-            for col in [0,1,2,3] {
-                if b[row][col].num == 0 {
-                    emptys.append((row: row, col: col))
-                }
-            }
-        }
-        
-        if emptys.count == 0 {
-            gameOver()
-            return
-        }
-        
-        srandom(UInt32(time(nil)))
-        let tuple = emptys[Int(arc4random()) % emptys.count]
-        b[tuple.row][tuple.col] = Tile(BASE)
-        background.addSubview(b[tuple.row][tuple.col])
-        b[tuple.row][tuple.col].create(withFrame: tileFrames[tuple.row][tuple.col])
-        // could generate BASE * BASE tiles also
     }
     
     func increaseScore(by amount: Int) {
@@ -352,54 +151,11 @@ class ViewController: UIViewController {
         scoreLabel.text = String(score)
     }
     
-    func checkForGameOver() {
-        let realBoard = b.map { $0.map { Tile($0.num) } }
-        print(b.map {$0.map {$0.num} })
-        print(realBoard.map {$0.map {$0.num} })
-        right()
-        if !nothingChanged(realBoard, b) {
-            print(b.map {$0.map {$0.num} })
-            print(realBoard.map {$0.map {$0.num} })
-            b = realBoard
-            return
-        }
-        
-        down()
-        if !nothingChanged(realBoard, b) {
-            b = realBoard
-            return
-        }
-        
-        left()
-        if !nothingChanged(realBoard, b) {
-            b = realBoard
-            return
-        }
-        
-        up()
-        if !nothingChanged(realBoard, b) {
-            b = realBoard
-            return
-        }
-        
-        gameOver()
-    }
-    
-    func nothingChanged(_ b1: [[Tile]], _ b2: [[Tile]]) -> Bool {
-        for i in [0,1,2,3] {
-            for j in [0,1,2,3] {
-                if b1[i][j] != b2[i][j] {
-                    return false
-                }
-            }
-        }
-        
-        return true
-    }
-    
     func gameOver() {
+        self.gameOverView.alpha = 0
+        self.gameOverView.isHidden = false
         UIView.animate(withDuration: 0.2, animations: {
-            self.gameOverView.isHidden = false
+            self.gameOverView.alpha = 1
         })
         
     }
