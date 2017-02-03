@@ -44,7 +44,9 @@ class Tile: UIView {
         
         UIView.animate(withDuration: 0.2*AC, animations: {
             self.label.text = String(self.num)
-            
+            if self.num > 1000 {
+                self.label.font = UIFont(name: "Avenir Next", size: 26)
+            }
             let colorBasedOff = self.num == BASE ? BASE + 1 : self.num
             
             self.backgroundColor = UIColor(hue:0.73, saturation:0.45, brightness:0.97, alpha: 1 + (1 / 14) - (log2(CGFloat(BASE))/log2(CGFloat(colorBasedOff))))    

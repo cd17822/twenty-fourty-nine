@@ -253,13 +253,17 @@
                                     <action selector="newGamePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fmw-n8-Fjc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ehh-ob-iOT">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ehh-ob-iOT">
                                 <rect key="frame" x="240" y="486" width="84" height="84"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="84" id="5Wc-zs-4WW"/>
                                     <constraint firstAttribute="width" constant="84" id="GlB-eA-JEj"/>
                                 </constraints>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Button" image="2048ai"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsImageWhenHighlighted" value="NO"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="aiPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0tA-fj-zEe"/>
                                 </connections>

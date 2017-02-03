@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     }
     
     var b = Board()
-    
+    var ai: AI?
     var tileFrames: [[CGRect]] {
         var tmp = [[CGRect]]()
         for row in boxes {
@@ -131,8 +131,7 @@ class ViewController: UIViewController {
         case .Left: b.left()
         case .Up: b.up()
         }
-        print(b.description)
-        print(oldBoard.description)
+        
         if !b.equals(oldBoard) {
             b.checkForGameOver()
             b.insertNewTile()
@@ -161,11 +160,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGamePressed(_ sender: Any) {
+        increaseScore(by: -1 * score)
         initBoard()
     }
     
     @IBAction func aiPressed(_ sender: Any) {
-        AI(on: self).start()
+        if ai == nil {
+            ai = AI(on: self)
+        }
+        
+        ai!.toggle()
     }
 }
 

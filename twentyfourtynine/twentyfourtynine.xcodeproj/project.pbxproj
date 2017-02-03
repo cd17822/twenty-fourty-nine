@@ -16,7 +16,6 @@
 		CB2A093E1E3A7A8300728AE2 /* Tile.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2A093D1E3A7A8300728AE2 /* Tile.xib */; };
 		CB2A09421E3A927800728AE2 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09411E3A927800728AE2 /* Tile.swift */; };
 		CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09431E3B0BEE00728AE2 /* Globals.swift */; };
-		CBA5D76B1E3F8F860075D7DB /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5D76A1E3F8F860075D7DB /* Ticker.swift */; };
 		CBD40EC81E4436160008E160 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD40EC71E4436160008E160 /* AI.swift */; };
 		CBD40ECA1E4445E00008E160 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD40EC91E4445E00008E160 /* Board.swift */; };
 /* End PBXBuildFile section */
@@ -33,7 +32,6 @@
 		CB2A093D1E3A7A8300728AE2 /* Tile.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Tile.xib; path = ../Tile.xib; sourceTree = "<group>"; };
 		CB2A09411E3A927800728AE2 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tile.swift; path = ../Tile.swift; sourceTree = "<group>"; };
 		CB2A09431E3B0BEE00728AE2 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
-		CBA5D76A1E3F8F860075D7DB /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		CBD40EC71E4436160008E160 /* AI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 		CBD40EC91E4445E00008E160 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,7 +72,6 @@
 				CBD40EC71E4436160008E160 /* AI.swift */,
 				CBD40EC91E4445E00008E160 /* Board.swift */,
 				CB2A09411E3A927800728AE2 /* Tile.swift */,
-				CBA5D76A1E3F8F860075D7DB /* Ticker.swift */,
 				CB2A092A1E3A707300728AE2 /* Main.storyboard */,
 				CB2A093D1E3A7A8300728AE2 /* Tile.xib */,
 				CB2A09301E3A707300728AE2 /* Assets.xcassets */,
@@ -160,7 +157,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB2A09291E3A707300728AE2 /* ViewController.swift in Sources */,
-				CBA5D76B1E3F8F860075D7DB /* Ticker.swift in Sources */,
 				CB2A09271E3A707300728AE2 /* AppDelegate.swift in Sources */,
 				CB2A092F1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld in Sources */,
 				CBD40EC81E4436160008E160 /* AI.swift in Sources */,

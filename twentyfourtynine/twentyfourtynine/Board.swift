@@ -14,6 +14,17 @@ class Board {
              [Tile(0),Tile(0),Tile(0),Tile(0)],
              [Tile(0),Tile(0),Tile(0),Tile(0)]]
     var vc: ViewController? = nil
+    var emptys: [(row: Int, col: Int)] {
+        var tmp = [(row: Int, col: Int)]()
+        for row in [0,1,2,3] {
+            for col in [0,1,2,3] {
+                if b[row][col].num == 0 {
+                    tmp.append((row: row, col: col))
+                }
+            }
+        }
+        return tmp
+    }
     var description: String {
         return String(describing: self.b.map { $0.map { $0.num } })
     }
@@ -202,15 +213,6 @@ class Board {
     }
     
     func insertNewTile() {
-        var emptys = [(row: Int, col: Int)]()
-        for row in [0,1,2,3] {
-            for col in [0,1,2,3] {
-                if b[row][col].num == 0 {
-                    emptys.append((row: row, col: col))
-                }
-            }
-        }
-        
         if emptys.count == 0 {
             vc?.gameOver()
             return
@@ -254,6 +256,18 @@ class Board {
         for i in [0,1,2,3] {
             for j in [0,1,2,3] {
                 if b[i][j].num != b2.b[i][j].num {
+                    return false
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    func equals(_ b2: [[Tile]]) -> Bool {
+        for i in [0,1,2,3] {
+            for j in [0,1,2,3] {
+                if b[i][j].num != b2[i][j].num {
                     return false
                 }
             }
