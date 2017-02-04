@@ -10,10 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     enum SwipeDirection {
-        case Right, Down, Left, Up
+        case right, down, left, up
     }
     
-    var b = Board()
     var ai: AI?
     var tileFrames: [[CGRect]] {
         var tmp = [[CGRect]]()
@@ -86,9 +85,9 @@ class ViewController: UIViewController {
         // handle case where there is a board saved in coredata?
         gameOverView.isHidden = true
         
-        b.clear()
+        B.clear()
         
-        b = Board(on: self)
+        B = Board(on: self)
     }
     
     func showTile(_ tile: Tile) {
@@ -110,38 +109,41 @@ class ViewController: UIViewController {
     }
     
     @IBAction func swipeRight(_ sender: Any) {
-        swipe(.Right)
+        ai?.disable()
+        swipe(.right)
     }
     @IBAction func swipeDown(_ sender: Any) {
-        swipe(.Down)
+        ai?.disable()
+        swipe(.down)
     }
     @IBAction func swipeLeft(_ sender: Any) {
-        swipe(.Left)
+        ai?.disable()
+        swipe(.left)
     }
     @IBAction func swipeUp(_ sender: Any) {
-        swipe(.Up)
+        ai?.disable()
+        swipe(.up)
     }
     
     func swipe(_ direction: SwipeDirection) {
-        let oldBoard = Board(b.b)
+        let oldBoard = Board(B.b)
         
         switch direction {
-        case .Right: b.right()
-        case .Down: b.down()
-        case .Left: b.left()
-        case .Up: b.up()
+        case .right: B.right()
+        case .down: B.down()
+        case .left: B.left()
+        case .up: B.up()
         }
         
-        if !b.equals(oldBoard) {
-            b.checkForGameOver()
-            b.insertNewTile()
+        if !B.equals(oldBoard) {
+            B.insertNewTile()
         }
         
     }
     
     func animateMove(fromRow: Int, toRow: Int, fromCol: Int, toCol: Int) {
         UIView.animate(withDuration: 0.1*AC, animations: {
-            self.b.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
+            B.b[fromRow][fromCol].frame = self.tileFrames[toRow][toCol]
         })
     }
     
@@ -156,10 +158,11 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.gameOverView.alpha = 1
         })
-        
+        ai?.disable()
     }
     
     @IBAction func newGamePressed(_ sender: Any) {
+        ai?.disable()
         increaseScore(by: -1 * score)
         initBoard()
     }

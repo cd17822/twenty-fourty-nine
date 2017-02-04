@@ -10,3 +10,4 @@ import Foundation
 
 var AC: TimeInterval = 1.0 // animation constant
 let BASE: Int = 2
+var B = Board()

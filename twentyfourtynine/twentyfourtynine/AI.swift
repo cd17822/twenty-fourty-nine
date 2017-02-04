@@ -15,7 +15,7 @@ class AI {
     }
     
     var vc: ViewController!
-    var b: [[Tile]] { return self.vc.b.b }
+    var b: [[Tile]] { return B.b }
     var lastMove: moveType = .nothing
     var on = false
     
@@ -34,10 +34,14 @@ class AI {
             AC = 1
         }
     }
+    
+    func disable() {
+        on = false
+    }
 
     func goRight() {
         UIView.animate(withDuration: 0.1*AC, animations: {
-            self.vc.swipe(.Right)
+            self.vc.swipe(.right)
         }, completion: { _ in
             self.decide()
         })
@@ -46,7 +50,7 @@ class AI {
     
     func goLeft() {
         UIView.animate(withDuration: 0.1*AC, animations: {
-            self.vc.swipe(.Left)
+            self.vc.swipe(.left)
         }, completion: { _ in
             self.decide()
         })
@@ -55,7 +59,7 @@ class AI {
     
     func goUp() {
         UIView.animate(withDuration: 0.1*AC, animations: {
-            self.vc.swipe(.Up)
+            self.vc.swipe(.up)
         }, completion: { _ in
             self.decide()
         })
@@ -64,7 +68,7 @@ class AI {
     
     func goDown() {
         UIView.animate(withDuration: 0.1*AC, animations: {
-            self.vc.swipe(.Down)
+            self.vc.swipe(.down)
         }, completion: { _ in
             self.decide()
         })
@@ -126,6 +130,7 @@ class AI {
     func decide() {
         //last move cases
         if !on {
+            lastMove = .nothing
             print("ai off")
         } else if lastMove == .shimmyDown && b[0][3].num == 0 {
             goRight()

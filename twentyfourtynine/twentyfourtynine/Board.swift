@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreData
+import UIKit
 
 class Board {
     var b = [[Tile(0),Tile(0),Tile(0),Tile(0)],
@@ -16,8 +18,8 @@ class Board {
     var vc: ViewController? = nil
     var emptys: [(row: Int, col: Int)] {
         var tmp = [(row: Int, col: Int)]()
-        for row in [0,1,2,3] {
-            for col in [0,1,2,3] {
+        for row in 0..<4 {
+            for col in 0..<4 {
                 if b[row][col].num == 0 {
                     tmp.append((row: row, col: col))
                 }
@@ -34,30 +36,49 @@ class Board {
         
         self.vc = vc
         
-        srandom(UInt32(time(nil)))
-        let first = arc4random() % 16
-        var second = arc4random() % 16
-        while second == first {
-            second = arc4random() % 16
+        if let oldBoxes = CoreDataHandler.checkForBoxes() {
+            b = oldBoxes.map { $0.map { Tile($0) } }
+        } else {
+            srandom(UInt32(time(nil)))
+            let first = arc4random() % 16
+            var second = arc4random() % 16
+            while second == first {
+                second = arc4random() % 16
+            }
+            
+            let firstInt = Int(first)
+            let secondInt = Int(second)
+            
+            b[firstInt/4][firstInt%4] = Tile(BASE)
+            b[secondInt/4][secondInt%4] = Tile(BASE)
         }
         
-        let firstInt = Int(first)
-        let secondInt = Int(second)
-        
-        b[firstInt/4][firstInt%4] = Tile(BASE)
-        b[secondInt/4][secondInt%4] = Tile(BASE)
-        
-        vc.showTile(b[firstInt/4][firstInt%4])
-        vc.showTile(b[secondInt/4][secondInt%4])
-        
-        b[firstInt/4][firstInt%4].create(withFrame: vc.tileFrames[firstInt/4][firstInt%4])
-        b[secondInt/4][secondInt%4].create(withFrame: vc.tileFrames[secondInt/4][secondInt%4])
+        showAllTiles()
+    }
+    
+    func showAllTiles() {
+        for (i, row) in b.enumerated() {
+            for (j, e) in row.enumerated() {
+                if e.num != 0 {
+                    vc?.showTile(e)
+                    e.create(withFrame: vc!.tileFrames[i][j])
+                }
+            }
+        }
     }
     
     convenience init(_ b: [[Tile]]) {
         self.init()
         
         self.b = b.map { $0.map { Tile($0.num) } }
+    }
+    
+    func testFullBoard() {
+        b = [[Tile(2),Tile(4),Tile(2),Tile(4)],
+             [Tile(4),Tile(2),Tile(4),Tile(2)],
+             [Tile(2),Tile(4),Tile(2),Tile(4)],
+             [Tile(0),Tile(4),Tile(2),Tile(4)]]
+        showAllTiles()
     }
     
     func clear() {
@@ -75,7 +96,7 @@ class Board {
     }
     
     func moveRight() {
-        for i in [0,1,2,3] {
+        for i in 0..<4 {
             for j in [2,1,0] {
                 if b[i][j].num != 0 && b[i][j+1].num == 0 {
                     var k = j
@@ -91,7 +112,7 @@ class Board {
     }
     
     func mergeRight() {
-        for i in [0,1,2,3] {
+        for i in 0..<4 {
             for j in [2,1,0] {
                 if b[i][j].num != 0 && b[i][j].num == b[i][j+1].num {
                     vc?.animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j+1)
@@ -112,7 +133,7 @@ class Board {
     
     func moveDown() {
         for i in [2,1,0] {
-            for j in [0,1,2,3] {
+            for j in 0..<4 {
                 if b[i][j].num != 0 && b[i+1][j].num == 0 {
                     var k = i
                     while k+1 < 4 && b[k+1][j].num == 0 {
@@ -128,7 +149,7 @@ class Board {
     
     func mergeDown() {
         for i in [2,1,0] {
-            for j in [0,1,2,3] {
+            for j in 0..<4 {
                 if b[i][j].num != 0 && b[i][j].num == b[i+1][j].num {
                     vc?.animateMove(fromRow: i, toRow: i+1, fromCol: j, toCol: j)
                     b[i+1][j].increment()
@@ -147,8 +168,8 @@ class Board {
     }
     
     func moveLeft() {
-        for i in [0,1,2,3] {
-            for j in [1,2,3] {
+        for i in 0..<4 {
+            for j in 1...3 {
                 if b[i][j].num != 0 && b[i][j-1].num == 0 {
                     var k = j
                     while k-1 >= 0 && b[i][k-1].num == 0 {
@@ -163,8 +184,8 @@ class Board {
     }
     
     func mergeLeft() {
-        for i in [0,1,2,3] {
-            for j in [1,2,3] {
+        for i in 0..<4 {
+            for j in 1...3 {
                 if b[i][j].num != 0 && b[i][j].num == b[i][j-1].num {
                     vc?.animateMove(fromRow: i, toRow: i, fromCol: j, toCol: j-1)
                     b[i][j-1].increment()
@@ -183,8 +204,8 @@ class Board {
     }
     
     func moveUp() {
-        for i in [1,2,3] {
-            for j in [0,1,2,3] {
+        for i in 1...3 {
+            for j in 0..<4 {
                 if b[i][j].num != 0 && b[i-1][j].num == 0 {
                     var k = i
                     while k-1 >= 0 && b[k-1][j].num == 0 {
@@ -199,8 +220,8 @@ class Board {
     }
     
     func mergeUp() {
-        for i in [1,2,3] {
-            for j in [0,1,2,3] {
+        for i in 1...3 {
+            for j in 0..<4 {
                 if b[i][j].num != 0 && b[i][j].num == b[i-1][j].num {
                     vc?.animateMove(fromRow: i, toRow: i-1, fromCol: j, toCol: j)
                     b[i-1][j].increment()
@@ -213,17 +234,17 @@ class Board {
     }
     
     func insertNewTile() {
-        if emptys.count == 0 {
-            vc?.gameOver()
-            return
-        }
-        
         srandom(UInt32(time(nil)))
         let tuple = emptys[Int(arc4random()) % emptys.count]
         b[tuple.row][tuple.col] = Tile(BASE)
         vc!.showTile(b[tuple.row][tuple.col])
         b[tuple.row][tuple.col].create(withFrame: vc!.tileFrames[tuple.row][tuple.col])
         // could generate BASE * BASE tiles also
+        
+        if emptys.count == 0 {
+            checkForGameOver()
+            return
+        }
     }
     
     func checkForGameOver() {
@@ -253,8 +274,8 @@ class Board {
     }
     
     func equals(_ b2: Board) -> Bool {
-        for i in [0,1,2,3] {
-            for j in [0,1,2,3] {
+        for i in 0..<4 {
+            for j in 0..<4 {
                 if b[i][j].num != b2.b[i][j].num {
                     return false
                 }
@@ -265,8 +286,8 @@ class Board {
     }
     
     func equals(_ b2: [[Tile]]) -> Bool {
-        for i in [0,1,2,3] {
-            for j in [0,1,2,3] {
+        for i in 0..<4 {
+            for j in 0..<4 {
                 if b[i][j].num != b2[i][j].num {
                     return false
                 }
@@ -274,5 +295,11 @@ class Board {
         }
         
         return true
+    }
+    
+    func save() {
+        print("saving")
+        CoreDataHandler.saveBoard(b)
+        print("saved")
     }
 }

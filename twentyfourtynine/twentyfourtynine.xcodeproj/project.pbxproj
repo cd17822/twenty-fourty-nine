@@ -18,6 +18,7 @@
 		CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09431E3B0BEE00728AE2 /* Globals.swift */; };
 		CBD40EC81E4436160008E160 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD40EC71E4436160008E160 /* AI.swift */; };
 		CBD40ECA1E4445E00008E160 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD40EC91E4445E00008E160 /* Board.swift */; };
+		CBFDEA351E44D652003FB56F /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFDEA341E44D652003FB56F /* CoreDataHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		CB2A09431E3B0BEE00728AE2 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CBD40EC71E4436160008E160 /* AI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 		CBD40EC91E4445E00008E160 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		CBFDEA341E44D652003FB56F /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				CB2A09281E3A707300728AE2 /* ViewController.swift */,
 				CBD40EC71E4436160008E160 /* AI.swift */,
 				CBD40EC91E4445E00008E160 /* Board.swift */,
+				CBFDEA341E44D652003FB56F /* CoreDataHandler.swift */,
 				CB2A09411E3A927800728AE2 /* Tile.swift */,
 				CB2A092A1E3A707300728AE2 /* Main.storyboard */,
 				CB2A093D1E3A7A8300728AE2 /* Tile.xib */,
@@ -157,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB2A09291E3A707300728AE2 /* ViewController.swift in Sources */,
+				CBFDEA351E44D652003FB56F /* CoreDataHandler.swift in Sources */,
 				CB2A09271E3A707300728AE2 /* AppDelegate.swift in Sources */,
 				CB2A092F1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld in Sources */,
 				CBD40EC81E4436160008E160 /* AI.swift in Sources */,
