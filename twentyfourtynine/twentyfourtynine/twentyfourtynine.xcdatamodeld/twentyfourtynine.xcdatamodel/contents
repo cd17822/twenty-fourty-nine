@@ -17,8 +17,9 @@
         <attribute name="box13" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="box14" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="box15" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SavedBoard" positionX="-63" positionY="-18" width="128" height="285"/>
+        <element name="SavedBoard" positionX="-63" positionY="-18" width="128" height="300"/>
     </elements>
 </model>

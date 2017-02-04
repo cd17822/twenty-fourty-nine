@@ -38,6 +38,7 @@ class Board {
         
         if let oldBoxes = CoreDataHandler.checkForBoxes() {
             b = oldBoxes.map { $0.map { Tile($0) } }
+            vc.increaseScore(by: CoreDataHandler.checkForScore()!)
         } else {
             srandom(UInt32(time(nil)))
             let first = arc4random() % 16
@@ -299,7 +300,7 @@ class Board {
     
     func save() {
         print("saving")
-        CoreDataHandler.saveBoard(b)
+        CoreDataHandler.saveBoard(b, withScore: vc!.score)
         print("saved")
     }
 }

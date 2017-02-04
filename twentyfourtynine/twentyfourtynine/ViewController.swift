@@ -158,6 +158,7 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.gameOverView.alpha = 1
         })
+        CoreDataHandler.deletePastBoards()
         ai?.disable()
     }
     
