@@ -67,13 +67,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.1, animations: {
+        UIView.animate(withDuration: 0.1, animations: { // i wish this didn't have to be here but i'm bad at coding and don't know another way to avoid this race condition
             self.view.alpha = 0.99
-            self.roundBoxes()
             self.updateInterBoxContraints()
         }, completion: { _ in
             self.view.alpha = 1.00
@@ -82,7 +80,6 @@ class ViewController: UIViewController {
     }
     
     func initBoard() {
-        // handle case where there is a board saved in coredata?
         gameOverView.isHidden = true
         
         B.clear()
@@ -92,14 +89,6 @@ class ViewController: UIViewController {
     
     func showTile(_ tile: Tile) {
         background.addSubview(tile)
-    }
-    
-    func roundBoxes() {
-        for row in boxes {
-            for box in row {
-                box.layer.cornerRadius = 5
-            }
-        }
     }
     
     func updateInterBoxContraints() {

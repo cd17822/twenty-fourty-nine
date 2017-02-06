@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB1899B61E48C6E800CCA2AD /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1899B51E48C6E800CCA2AD /* Tile.swift */; };
 		CB2A09271E3A707300728AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09261E3A707300728AE2 /* AppDelegate.swift */; };
 		CB2A09291E3A707300728AE2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09281E3A707300728AE2 /* ViewController.swift */; };
 		CB2A092C1E3A707300728AE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB2A092A1E3A707300728AE2 /* Main.storyboard */; };
 		CB2A092F1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CB2A092D1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld */; };
 		CB2A09311E3A707300728AE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB2A09301E3A707300728AE2 /* Assets.xcassets */; };
 		CB2A09341E3A707300728AE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB2A09321E3A707300728AE2 /* LaunchScreen.storyboard */; };
-		CB2A093E1E3A7A8300728AE2 /* Tile.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2A093D1E3A7A8300728AE2 /* Tile.xib */; };
-		CB2A09421E3A927800728AE2 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09411E3A927800728AE2 /* Tile.swift */; };
 		CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A09431E3B0BEE00728AE2 /* Globals.swift */; };
 		CBD40EC81E4436160008E160 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD40EC71E4436160008E160 /* AI.swift */; };
 		CBD40ECA1E4445E00008E160 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD40EC91E4445E00008E160 /* Board.swift */; };
@@ -22,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB1899B51E48C6E800CCA2AD /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		CB2A09231E3A707300728AE2 /* twentyfourtynine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twentyfourtynine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB2A09261E3A707300728AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB2A09281E3A707300728AE2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -30,8 +30,6 @@
 		CB2A09301E3A707300728AE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB2A09331E3A707300728AE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB2A09351E3A707300728AE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CB2A093D1E3A7A8300728AE2 /* Tile.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Tile.xib; path = ../Tile.xib; sourceTree = "<group>"; };
-		CB2A09411E3A927800728AE2 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tile.swift; path = ../Tile.swift; sourceTree = "<group>"; };
 		CB2A09431E3B0BEE00728AE2 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CBD40EC71E4436160008E160 /* AI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 		CBD40EC91E4445E00008E160 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
@@ -74,9 +72,8 @@
 				CBD40EC71E4436160008E160 /* AI.swift */,
 				CBD40EC91E4445E00008E160 /* Board.swift */,
 				CBFDEA341E44D652003FB56F /* CoreDataHandler.swift */,
-				CB2A09411E3A927800728AE2 /* Tile.swift */,
+				CB1899B51E48C6E800CCA2AD /* Tile.swift */,
 				CB2A092A1E3A707300728AE2 /* Main.storyboard */,
-				CB2A093D1E3A7A8300728AE2 /* Tile.xib */,
 				CB2A09301E3A707300728AE2 /* Assets.xcassets */,
 				CB2A09321E3A707300728AE2 /* LaunchScreen.storyboard */,
 				CB2A09351E3A707300728AE2 /* Info.plist */,
@@ -148,7 +145,6 @@
 				CB2A09341E3A707300728AE2 /* LaunchScreen.storyboard in Resources */,
 				CB2A09311E3A707300728AE2 /* Assets.xcassets in Resources */,
 				CB2A092C1E3A707300728AE2 /* Main.storyboard in Resources */,
-				CB2A093E1E3A7A8300728AE2 /* Tile.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,11 +158,11 @@
 				CB2A09291E3A707300728AE2 /* ViewController.swift in Sources */,
 				CBFDEA351E44D652003FB56F /* CoreDataHandler.swift in Sources */,
 				CB2A09271E3A707300728AE2 /* AppDelegate.swift in Sources */,
+				CB1899B61E48C6E800CCA2AD /* Tile.swift in Sources */,
 				CB2A092F1E3A707300728AE2 /* twentyfourtynine.xcdatamodeld in Sources */,
 				CBD40EC81E4436160008E160 /* AI.swift in Sources */,
 				CB2A09441E3B0BEE00728AE2 /* Globals.swift in Sources */,
 				CBD40ECA1E4445E00008E160 /* Board.swift in Sources */,
-				CB2A09421E3A927800728AE2 /* Tile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

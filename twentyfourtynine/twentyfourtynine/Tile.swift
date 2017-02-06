@@ -57,7 +57,7 @@ class Tile: UIView {
             }
             let colorBasedOff = self.num == BASE ? BASE + 1 : self.num
             
-            self.backgroundColor = UIColor(hue:0.73, saturation:0.45, brightness:0.97, alpha: 1 + (1 / 14) - (log2(CGFloat(BASE))/log2(CGFloat(colorBasedOff))))    
+            self.backgroundColor = UIColor(hue:0.73, saturation:0.45, brightness:0.97, alpha: 1 + (1 / 14) - (log2(CGFloat(BASE))/log2(CGFloat(colorBasedOff))))
         })
     }
     
@@ -66,11 +66,11 @@ class Tile: UIView {
     }
     
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
 }
