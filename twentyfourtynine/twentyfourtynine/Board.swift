@@ -39,6 +39,7 @@ class Board {
         if let oldBoxes = CoreDataHandler.checkForBoxes() {
             b = oldBoxes.map { $0.map { Tile($0) } }
             vc.increaseScore(by: CoreDataHandler.checkForScore()!)
+            checkForGameOver()
         } else {
             srandom(UInt32(time(nil)))
             let first = arc4random() % 16

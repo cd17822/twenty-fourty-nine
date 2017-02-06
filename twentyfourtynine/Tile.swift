@@ -29,7 +29,13 @@ class Tile: UIView {
     func configureLabel() {
         label.text = String(num)
         label.textColor = UIColor.white
-        label.font = UIFont(name: "Avenir Next", size: 40)
+        if self.num > 10000 {
+            label.font = UIFont(name: "Avenir Next", size: 16)
+        } else if self.num > 1000 {
+            label.font = UIFont(name: "Avenir Next", size: 26)
+        } else {
+            label.font = UIFont(name: "Avenir Next", size: 40)
+        }
         label.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         label.textAlignment = .center
         addSubview(label)
@@ -46,6 +52,8 @@ class Tile: UIView {
             self.label.text = String(self.num)
             if self.num > 1000 {
                 self.label.font = UIFont(name: "Avenir Next", size: 26)
+            } else if self.num > 10000 {
+                self.label.font = UIFont(name: "Avenir Next", size: 16)
             }
             let colorBasedOff = self.num == BASE ? BASE + 1 : self.num
             

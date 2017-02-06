@@ -163,6 +163,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGamePressed(_ sender: Any) {
+        CoreDataHandler.deletePastBoards()
         ai?.disable()
         increaseScore(by: -1 * score)
         initBoard()
