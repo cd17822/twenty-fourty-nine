@@ -6,6 +6,9 @@
 //  Copyright © 2017 Charles DiGiovanna. All rights reserved.
 //
 
+// THIS AI WAS ADAPTED FROM AN EARLIER WORK OF MINE WRITTEN IN PYTHON
+// https://github.com/cd17822/Tkinter-Ventures/blob/master/2048%20%26%20AI.py
+
 import Foundation
 import UIKit
 
