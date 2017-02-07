@@ -351,19 +351,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="HJK-TD-eOn" secondAttribute="bottom" constant="35.5" id="1ig-9J-3FA"/>
-                            <constraint firstItem="k7r-91-Ced" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="2wg-ud-u8i"/>
                             <constraint firstItem="chq-ck-mkT" firstAttribute="centerX" secondItem="KxZ-Cn-zDG" secondAttribute="centerX" id="3Nb-Bo-Vre"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ehh-ob-iOT" secondAttribute="trailing" constant="-20" id="61d-ab-epb"/>
                             <constraint firstItem="QSb-Ku-TEZ" firstAttribute="top" secondItem="chq-ck-mkT" secondAttribute="bottom" constant="10" id="8jz-Vo-h1U"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EhY-yW-B3K" secondAttribute="trailing" id="9vC-dv-h65"/>
                             <constraint firstItem="KxZ-Cn-zDG" firstAttribute="centerY" secondItem="k7r-91-Ced" secondAttribute="centerY" id="DPJ-xt-Lad"/>
                             <constraint firstItem="QSb-Ku-TEZ" firstAttribute="centerX" secondItem="KxZ-Cn-zDG" secondAttribute="centerX" id="Jij-ZO-bo1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ehh-ob-iOT" secondAttribute="bottom" constant="-2" id="O20-Oi-zmj"/>
                             <constraint firstItem="KxZ-Cn-zDG" firstAttribute="top" secondItem="chq-ck-mkT" secondAttribute="bottom" constant="-20.5" id="Q9t-4D-c1Z"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Emy-Md-MGt" secondAttribute="bottom" constant="35" id="Rex-B7-Dqc"/>
                             <constraint firstItem="KxZ-Cn-zDG" firstAttribute="height" secondItem="k7r-91-Ced" secondAttribute="height" id="VjI-JS-xmR"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Owb-so-8vK" secondAttribute="leading" id="dap-gV-WII"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Owb-so-8vK" secondAttribute="trailing" id="g7U-XF-GHn"/>
+                            <constraint firstItem="EhY-yW-B3K" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="XTv-Gc-1eQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KxZ-Cn-zDG" secondAttribute="trailing" id="hNH-cJ-0wG"/>
                             <constraint firstItem="wRQ-dC-pUc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ioq-2g-igm"/>
                             <constraint firstItem="k7r-91-Ced" firstAttribute="leading" secondItem="Cnz-g3-xut" secondAttribute="leading" id="jgI-Ea-rB4"/>
@@ -404,6 +402,26 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="vCI-cC-f7g">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="9z2-ds-Ef0"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="MoT-bq-2NI">
+                    <connections>
+                        <action selector="swipeDown:" destination="BYZ-38-t0r" id="ez5-Mv-b9k"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="OET-tr-Wtz">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="LZW-bX-BHP"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="oF9-Iu-QAv">
+                    <connections>
+                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="sfd-ZH-rvD"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="135" y="135.21126760563379"/>
         </scene>
