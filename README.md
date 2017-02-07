@@ -1,0 +1,1 @@
+Click the man to activate AI!
