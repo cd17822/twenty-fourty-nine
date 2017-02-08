@@ -52,8 +52,11 @@ class Board {
             let firstInt = Int(first)
             let secondInt = Int(second)
 
-            b[firstInt/4][firstInt%4] = Tile(BASE)
-            b[secondInt/4][secondInt%4] = Tile(BASE)
+            let firstTileValue =  arc4random() %  6 != 0 ? BASE : BASE*BASE
+            let secondTileValue = arc4random() %  6 != 0 ? BASE : BASE*BASE
+            
+            b[firstInt/4][firstInt%4] = Tile(firstTileValue)
+            b[secondInt/4][secondInt%4] = Tile(secondTileValue)
         }
 
         showAllTiles()
